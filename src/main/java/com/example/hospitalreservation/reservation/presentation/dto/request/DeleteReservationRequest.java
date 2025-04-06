@@ -7,7 +7,7 @@ public record DeleteReservationRequest(
         String cancelReason
 ) {
 
-    public static DeleteReservationCommand toCommand(Long id, String cancelReason) {
-        return new DeleteReservationCommand(id, cancelReason);
+    public static DeleteReservationCommand toCommand(Long id, DeleteReservationRequest deleteReservationRequest) {
+        return new DeleteReservationCommand(id, deleteReservationRequest.cancelReason());
     }
 }

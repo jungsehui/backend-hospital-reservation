@@ -6,6 +6,8 @@ import com.example.hospitalreservation.reservation.domain.service.ReservationReg
 import com.example.hospitalreservation.reservation.domain.repository.ReservationRepository;
 import com.example.hospitalreservation.reservation.application.command.CreateReservationCommand;
 import com.example.hospitalreservation.reservation.application.command.DeleteReservationCommand;
+import com.example.hospitalreservation.reservation.presentation.dto.response.CreateReservationResponse;
+import com.example.hospitalreservation.reservation.presentation.dto.response.GetReservationResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,17 +25,24 @@ public class ReservationService {
         this.reservationRepository = reservationRepository;
     }
 
-    public List<Reservation> getAllReservations() {
+    public List<Reservation> getReservations() {
         return reservationRepository.findAll();
     }
 
-    public Reservation createReservation(CreateReservationCommand createReservationCommand) {
-        Reservation reservation = createReservationCommand.toReservation();
-        Reservation registeredReservation = reservationRegister.register(reservation);
-        return registeredReservation;
+    public List<GetReservationResponse> getAllReservations() {
+        List<Reservation> reservations = reservationRepository.findAll();
+        return reservations.stream()
+                .map(GetReservationResponse::of)
+                .toList();
     }
 
-    public boolean cancelReservation(DeleteReservationCommand deleteReservationCommand) {
-        return reservationCanceler.cancel(deleteReservationCommand);
+    public CreateReservationResponse createReservation(CreateReservationCommand createReservationCommand) {
+        Reservation reservation = createReservationCommand.toReservation();
+        Reservation registeredReservation = reservationRegister.register(reservation);
+        return CreateReservationResponse.of(registeredReservation);
+    }
+
+    public void cancelReservation(DeleteReservationCommand deleteReservationCommand) {
+        reservationCanceler.cancel(deleteReservationCommand);
     }
 }

@@ -18,14 +18,13 @@ public class ReservationCanceler {
         this.reservationRepository = reservationRepository;
     }
 
-    public boolean cancel(DeleteReservationCommand deleteReservationCommand) {
+    public void cancel(DeleteReservationCommand deleteReservationCommand) {
         try {
             Reservation toDelete = reservationRepository.findById(deleteReservationCommand.id());
             log.info("예약 ID {} 취소됨. 사유: {}", deleteReservationCommand.id(), deleteReservationCommand.cancelReason());
-            return reservationRepository.deleteById(toDelete.getId());
+            reservationRepository.deleteById(toDelete.getId());
         } catch (ApplicationException e) {
             log.warn("예약 취소 실패 - ID {}: {}", deleteReservationCommand.id(), ReservationExceptionCode.RESERVATION_NOT_FOUND.getMessage());
-            return false;
         }
     }
 }

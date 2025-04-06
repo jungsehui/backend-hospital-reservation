@@ -3,7 +3,9 @@ package com.example.hospitalreservation.reservation.presentation.dto.request;
 import com.example.hospitalreservation.common.exception.ApplicationException;
 import com.example.hospitalreservation.patient.domain.exception.PatientExceptionCode;
 import com.example.hospitalreservation.reservation.application.command.CreateReservationCommand;
+import com.example.hospitalreservation.reservation.domain.treatment.TreatmentPurposeType;
 import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -11,13 +13,15 @@ import java.util.Objects;
 public record CreateReservationRequest(
         Long doctorId,
         Long patientId,
-        LocalDateTime reservationTime
+        LocalDateTime reservationStartTime,
+        LocalDateTime reservationEndTime,
+        TreatmentPurposeType reason
 ) {
 
     public CreateReservationCommand toCommand() {
         validatePositiveId(patientId);
-        validatePastTime(reservationTime);
-        return new CreateReservationCommand(doctorId, patientId, reservationTime);
+        validatePastTime(reservationStartTime);
+        return new CreateReservationCommand(doctorId, patientId, reservationStartTime, reservationEndTime, reason);
     }
 
     private void validatePositiveId(Long id) {
@@ -26,8 +30,8 @@ public record CreateReservationRequest(
         }
     }
 
-    private void validatePastTime(LocalDateTime reservationTime) {
-        if (!isTimeBeforeNow(reservationTime)) {
+    private void validatePastTime(LocalDateTime startTime) {
+        if (!isTimeBeforeNow(startTime)) {
             throw new ApplicationException(ReservationExceptionCode.INVALID_RESERVATION_TIME_PAST);
         }
     }

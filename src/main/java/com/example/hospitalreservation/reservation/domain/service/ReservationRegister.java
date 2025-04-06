@@ -17,7 +17,7 @@ public class ReservationRegister {
 
     public Reservation register(Reservation reservation) {
         boolean isOverlapping = reservationRepository.findAll().stream()
-                .anyMatch(existingReservation -> existingReservation.isOverlapping(existingReservation.getReservationTime(), reservation.getReservationTime()));
+                .anyMatch(existingReservation -> existingReservation.isOverlapping(existingReservation.getStartTime(), reservation.getStartTime()));
         if (isOverlapping) {
             throw new ApplicationException(ReservationExceptionCode.DUPLICATE_RESERVATION_TIME);
         }

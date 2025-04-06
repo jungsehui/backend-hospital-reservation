@@ -29,7 +29,7 @@ public class ReservationRepository {
 
     public boolean existsByReservationTime(LocalDateTime reservationTime) {
         return reservations.stream()
-                .anyMatch(reservation -> reservation.getReservationTime().equals(reservationTime));
+                .anyMatch(reservation -> reservation.getStartTime().equals(reservationTime));
     }
 
     public synchronized Reservation save(Reservation reservation) {
@@ -37,14 +37,16 @@ public class ReservationRepository {
                 nextId.getAndIncrement(),
                 reservation.getDoctorId(),
                 reservation.getPatientId(),
-                reservation.getReservationTime()
+                reservation.getStartTime(),
+                reservation.getEndTime(),
+                reservation.getTreatmentPurposeType()
         );
         reservations.add(toSave);
         return toSave;
     }
 
-    public boolean deleteById(Long id) {
-        return reservations.removeIf(
+    public void deleteById(Long id) {
+        reservations.removeIf(
                 reservation -> reservation.getId().equals(id)
         );
     }

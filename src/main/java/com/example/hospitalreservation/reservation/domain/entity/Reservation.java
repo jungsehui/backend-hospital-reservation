@@ -1,39 +1,48 @@
 package com.example.hospitalreservation.reservation.domain.entity;
 
 import com.example.hospitalreservation.common.exception.ApplicationException;
+import com.example.hospitalreservation.reservation.domain.treatment.TreatmentPurposeType;
 import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+@Getter
 public class Reservation {
 
     private Long id;
     private Long doctorId;
     private Long patientId;
-    private LocalDateTime reservationTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+    private TreatmentPurposeType treatmentPurposeType;
 
     public Reservation(
             final Long id,
             final Long doctorId,
             final Long patientId,
-            final LocalDateTime reservationTime
+            final LocalDateTime startTime,
+            final LocalDateTime endTime,
+            final TreatmentPurposeType treatmentPurposeType
     ) {
         this.id = id;
         this.doctorId = doctorId;
         this.patientId = patientId;
-        this.reservationTime = reservationTime;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.treatmentPurposeType = treatmentPurposeType;
     }
 
     public void validateWithinBusinessHours(LocalDateTime time) {
         LocalTime localTime = time.toLocalTime();
-        if (localTime.isBefore(LocalTime.of(9, 0)) || !localTime.isAfter(LocalTime.of(16, 59))) {
+        if (localTime.isBefore(LocalTime.of(9, 0)) || localTime.isAfter(LocalTime.of(16, 59))) {
             throw new ApplicationException(ReservationExceptionCode.OUT_OF_BUSINESS_HOURS);
         }
     }
 
-    public void validateHourlySlot(LocalDateTime time) {
-        if (!(time.getMinute() == 0)) {
+    public void validateHourlySlot(LocalDateTime startTime, LocalDateTime endTime) {
+        if (!(startTime.plusHours(1).equals(endTime))) {
             throw new ApplicationException(ReservationExceptionCode.INVALID_RESERVATION_TIME_RANGE);
         }
     }
@@ -42,21 +51,5 @@ public class Reservation {
         LocalDateTime startTime = existingTime;
         LocalDateTime endTime = startTime.plusHours(1);
         return !newTime.isBefore(startTime) && newTime.isBefore(endTime);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Long getDoctorId() {
-        return doctorId;
-    }
-
-    public Long getPatientId() {
-        return patientId;
-    }
-
-    public LocalDateTime getReservationTime() {
-        return reservationTime;
     }
 }
