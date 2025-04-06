@@ -13,7 +13,7 @@ public record CreateReservationResponse(
         return new CreateReservationResponse(
                 reservation.getId(),
                 Success.CREATE_RESERVATION.getMessage(),
-                reservation.getTreatmentPurposeType().getFee()
+                reservation.getTreatmentPurpose().getFee()
         );
     }
 }

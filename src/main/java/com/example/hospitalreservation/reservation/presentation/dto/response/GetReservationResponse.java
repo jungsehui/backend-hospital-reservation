@@ -20,7 +20,7 @@ public record GetReservationResponse(
                 reservation.getPatientId(),
                 reservation.getStartTime(),
                 reservation.getEndTime(),
-                reservation.getTreatmentPurposeType().getFee()
+                reservation.getTreatmentPurpose().getFee()
         );
     }
 }

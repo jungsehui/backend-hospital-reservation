@@ -3,9 +3,8 @@ package com.example.hospitalreservation.reservation.presentation.dto.request;
 import com.example.hospitalreservation.common.exception.ApplicationException;
 import com.example.hospitalreservation.patient.domain.exception.PatientExceptionCode;
 import com.example.hospitalreservation.reservation.application.command.CreateReservationCommand;
-import com.example.hospitalreservation.reservation.domain.treatment.TreatmentPurposeType;
+import com.example.hospitalreservation.reservation.domain.treatment.TreatmentPurpose;
 import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -15,7 +14,7 @@ public record CreateReservationRequest(
         Long patientId,
         LocalDateTime reservationStartTime,
         LocalDateTime reservationEndTime,
-        TreatmentPurposeType reason
+        TreatmentPurpose reason
 ) {
 
     public CreateReservationCommand toCommand() {

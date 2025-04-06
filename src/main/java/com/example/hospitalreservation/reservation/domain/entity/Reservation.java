@@ -1,7 +1,7 @@
 package com.example.hospitalreservation.reservation.domain.entity;
 
 import com.example.hospitalreservation.common.exception.ApplicationException;
-import com.example.hospitalreservation.reservation.domain.treatment.TreatmentPurposeType;
+import com.example.hospitalreservation.reservation.domain.treatment.TreatmentPurpose;
 import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
 import lombok.Getter;
 
@@ -16,7 +16,7 @@ public class Reservation {
     private Long patientId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private TreatmentPurposeType treatmentPurposeType;
+    private TreatmentPurpose treatmentPurpose;
 
     public Reservation(
             final Long id,
@@ -24,14 +24,14 @@ public class Reservation {
             final Long patientId,
             final LocalDateTime startTime,
             final LocalDateTime endTime,
-            final TreatmentPurposeType treatmentPurposeType
+            final TreatmentPurpose treatmentPurpose
     ) {
         this.id = id;
         this.doctorId = doctorId;
         this.patientId = patientId;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.treatmentPurposeType = treatmentPurposeType;
+        this.treatmentPurpose = treatmentPurpose;
     }
 
     public void validateWithinBusinessHours(LocalDateTime time) {

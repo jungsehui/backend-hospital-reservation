@@ -2,7 +2,7 @@ package com.example.hospitalreservation.reservation.application;
 
 import com.example.hospitalreservation.reservation.domain.entity.Reservation;
 import com.example.hospitalreservation.reservation.domain.repository.ReservationRepository;
-import com.example.hospitalreservation.reservation.domain.treatment.TreatmentPurposeType;
+import com.example.hospitalreservation.reservation.domain.treatment.TreatmentPurpose;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +25,7 @@ public class ReservationServiceTest {
     public void testFindAllReturnsShallowCopy() throws Exception {
         // given
         LocalDateTime now = LocalDateTime.now().withMinute(0).withSecond(0).withNano(0);
-        Reservation reservation = new Reservation(null, 1L, 1L, now, now.plusHours(1), TreatmentPurposeType.GENERAL_CHECKUP);
+        Reservation reservation = new Reservation(null, 1L, 1L, now, now.plusHours(1), TreatmentPurpose.GENERAL_CHECKUP);
         Reservation savedReservation = reservationRepository.save(reservation);
 
         // when

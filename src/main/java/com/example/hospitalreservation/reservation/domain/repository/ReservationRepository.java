@@ -39,7 +39,7 @@ public class ReservationRepository {
                 reservation.getPatientId(),
                 reservation.getStartTime(),
                 reservation.getEndTime(),
-                reservation.getTreatmentPurposeType()
+                reservation.getTreatmentPurpose()
         );
         reservations.add(toSave);
         return toSave;

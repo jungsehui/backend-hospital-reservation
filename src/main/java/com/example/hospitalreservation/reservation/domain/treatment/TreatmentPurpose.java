@@ -5,10 +5,9 @@ import com.example.hospitalreservation.common.type.Type;
 import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 @JsonFormat(shape = JsonFormat.Shape.STRING)
-public enum TreatmentPurposeType implements Type {
+public enum TreatmentPurpose implements Type {
 
     GENERAL_CHECKUP("일반 검진", 10_000),
     COLD_SYMPTOMS("감기 증상", 15_000),
@@ -18,7 +17,7 @@ public enum TreatmentPurposeType implements Type {
     private final String type;
     private final int fee;
 
-    TreatmentPurposeType(String type, int fee) {
+    TreatmentPurpose(String type, int fee) {
         this.type = type;
         this.fee = fee;
     }
@@ -34,8 +33,8 @@ public enum TreatmentPurposeType implements Type {
     }
 
     @JsonCreator
-    public static TreatmentPurposeType of(String name) {
-        for (TreatmentPurposeType value : values()) {
+    public static TreatmentPurpose of(String name) {
+        for (TreatmentPurpose value : values()) {
             if (value.getType().equals(name)) {
                 return value;
             }
