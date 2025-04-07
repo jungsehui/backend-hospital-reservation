@@ -25,17 +25,17 @@ public class ReservationService {
         this.reservationRepository = reservationRepository;
     }
 
+    public CreateReservationResponse createReservation(CreateReservationCommand createReservationCommand) {
+        Reservation reservation = createReservationCommand.toReservation();
+        Reservation registeredReservation = reservationRegister.register(reservation);
+        return CreateReservationResponse.of(registeredReservation);
+    }
+
     public List<GetReservationResponse> getAllReservations() {
         List<Reservation> reservations = reservationRepository.findAll();
         return reservations.stream()
                 .map(GetReservationResponse::of)
                 .toList();
-    }
-
-    public CreateReservationResponse createReservation(CreateReservationCommand createReservationCommand) {
-        Reservation reservation = createReservationCommand.toReservation();
-        Reservation registeredReservation = reservationRegister.register(reservation);
-        return CreateReservationResponse.of(registeredReservation);
     }
 
     public void cancelReservation(DeleteReservationCommand deleteReservationCommand) {

@@ -19,12 +19,12 @@ public class Reservation {
     private TreatmentPurpose treatmentPurpose;
 
     public Reservation(
-            final Long id,
-            final Long doctorId,
-            final Long patientId,
-            final LocalDateTime startTime,
-            final LocalDateTime endTime,
-            final TreatmentPurpose treatmentPurpose
+            Long id,
+            Long doctorId,
+            Long patientId,
+            LocalDateTime startTime,
+            LocalDateTime endTime,
+            TreatmentPurpose treatmentPurpose
     ) {
         this.id = id;
         this.doctorId = doctorId;
@@ -36,7 +36,7 @@ public class Reservation {
 
     public void validateWithinBusinessHours(LocalDateTime time) {
         LocalTime localTime = time.toLocalTime();
-        if (localTime.isBefore(LocalTime.of(9, 0)) || localTime.isAfter(LocalTime.of(16, 59))) {
+        if (localTime.isBefore(LocalTime.of(9, 0)) || localTime.isAfter(LocalTime.of(16, 00))) {
             throw new ApplicationException(ReservationExceptionCode.OUT_OF_BUSINESS_HOURS);
         }
     }
@@ -51,5 +51,9 @@ public class Reservation {
         LocalDateTime startTime = existingTime;
         LocalDateTime endTime = startTime.plusHours(1);
         return !newTime.isBefore(startTime) && newTime.isBefore(endTime);
+    }
+
+    public Reservation copy() {
+        return new Reservation(this.id, this.doctorId, this.patientId, this.startTime, this.endTime, this.treatmentPurpose);
     }
 }

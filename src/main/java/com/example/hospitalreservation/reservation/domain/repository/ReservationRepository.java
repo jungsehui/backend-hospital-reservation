@@ -16,22 +16,6 @@ public class ReservationRepository {
     private final List<Reservation> reservations = new ArrayList<>();
     private final AtomicLong nextId = new AtomicLong(1);
 
-    public Reservation findById(Long id) {
-        return reservations.stream()
-                .filter(reservation -> reservation.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new ApplicationException(ReservationExceptionCode.RESERVATION_NOT_FOUND));
-    }
-
-    public List<Reservation> findAll() {
-        return List.copyOf(reservations);
-    }
-
-    public boolean existsByReservationTime(LocalDateTime reservationTime) {
-        return reservations.stream()
-                .anyMatch(reservation -> reservation.getStartTime().equals(reservationTime));
-    }
-
     public synchronized Reservation save(Reservation reservation) {
         Reservation toSave = new Reservation(
                 nextId.getAndIncrement(),
@@ -45,9 +29,26 @@ public class ReservationRepository {
         return toSave;
     }
 
+    public Reservation findById(Long id) {
+        return reservations.stream()
+                .filter(reservation -> reservation.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new ApplicationException(ReservationExceptionCode.RESERVATION_NOT_FOUND));
+    }
+
+    public List<Reservation> findAll() {
+        return reservations.stream()
+                .map(Reservation::copy)
+                .toList();
+    }
+
     public void deleteById(Long id) {
         reservations.removeIf(
                 reservation -> reservation.getId().equals(id)
         );
+    }
+
+    public void clear() {
+        reservations.clear();
     }
 }
