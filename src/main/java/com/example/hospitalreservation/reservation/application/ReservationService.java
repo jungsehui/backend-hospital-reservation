@@ -1,11 +1,11 @@
 package com.example.hospitalreservation.reservation.application;
 
-import com.example.hospitalreservation.reservation.domain.entity.Reservation;
-import com.example.hospitalreservation.reservation.domain.service.ReservationCanceler;
-import com.example.hospitalreservation.reservation.domain.service.ReservationRegister;
-import com.example.hospitalreservation.reservation.domain.repository.ReservationRepository;
 import com.example.hospitalreservation.reservation.application.command.CreateReservationCommand;
 import com.example.hospitalreservation.reservation.application.command.DeleteReservationCommand;
+import com.example.hospitalreservation.reservation.domain.entity.Reservation;
+import com.example.hospitalreservation.reservation.domain.repository.ReservationRepository;
+import com.example.hospitalreservation.reservation.domain.service.ReservationCanceler;
+import com.example.hospitalreservation.reservation.domain.service.ReservationRegister;
 import com.example.hospitalreservation.reservation.presentation.dto.response.CreateReservationResponse;
 import com.example.hospitalreservation.reservation.presentation.dto.response.GetReservationResponse;
 import org.springframework.stereotype.Service;
@@ -23,10 +23,6 @@ public class ReservationService {
         this.reservationCanceler = reservationCanceler;
         this.reservationRegister = reservationRegister;
         this.reservationRepository = reservationRepository;
-    }
-
-    public List<Reservation> getReservations() {
-        return reservationRepository.findAll();
     }
 
     public List<GetReservationResponse> getAllReservations() {

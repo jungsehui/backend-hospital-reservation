@@ -2,6 +2,7 @@ package com.example.hospitalreservation.reservation.presentation.view;
 
 import com.example.hospitalreservation.reservation.application.ReservationService;
 import com.example.hospitalreservation.reservation.domain.entity.Reservation;
+import com.example.hospitalreservation.reservation.presentation.dto.response.GetReservationResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +24,7 @@ public class ReservationViewController {
 
     @GetMapping
     public String getReservations(Model model) {
-        List<Reservation> reservations = reservationService.getReservations();
+        List<GetReservationResponse> reservations = reservationService.getAllReservations();
         model.addAttribute("reservations", reservations);
         return "index";
     }
