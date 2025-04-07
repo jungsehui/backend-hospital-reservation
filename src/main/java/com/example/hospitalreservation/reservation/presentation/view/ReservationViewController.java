@@ -1,7 +1,6 @@
 package com.example.hospitalreservation.reservation.presentation.view;
 
 import com.example.hospitalreservation.reservation.application.ReservationService;
-import com.example.hospitalreservation.reservation.domain.entity.Reservation;
 import com.example.hospitalreservation.reservation.presentation.dto.response.GetReservationResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

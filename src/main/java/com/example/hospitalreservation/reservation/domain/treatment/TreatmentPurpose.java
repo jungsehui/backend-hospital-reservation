@@ -6,7 +6,6 @@ import com.example.hospitalreservation.reservation.exception.ReservationExceptio
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@JsonFormat(shape = JsonFormat.Shape.STRING)
 public enum TreatmentPurpose implements Type {
 
     GENERAL_CHECKUP("일반 검진", 10_000),

@@ -61,9 +61,9 @@
 </div>
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Handle reservation form submission
-        $("#reservationForm").submit(function(e) {
+        $("#reservationForm").submit(function (e) {
             e.preventDefault();
 
             const startTimeStr = $("#reservationStartTime").val();
@@ -95,13 +95,13 @@
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(reservationData),
-                success: function(response) {
+                success: function (response) {
                     showNotification("예약이 성공적으로 추가되었습니다.", "success");
-                    setTimeout(function() {
+                    setTimeout(function () {
                         window.location.href = "/reservations";
                     }, 1500);
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     const msg = xhr.responseJSON?.message || "알 수 없는 오류";
                     showNotification("예약 추가 실패: " + msg, "error");
                 }
@@ -115,8 +115,8 @@
         $("body").append(notification);
 
         // Auto remove after 3 seconds
-        setTimeout(function() {
-            notification.fadeOut(function() {
+        setTimeout(function () {
+            notification.fadeOut(function () {
                 $(this).remove();
             });
         }, 3000);

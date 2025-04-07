@@ -62,17 +62,17 @@
 </div>
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Load all reservations when page loads
         loadReservations();
 
         // Close modals when clicking on x or cancel button
-        $(".close-modal, .close-form").click(function() {
+        $(".close-modal, .close-form").click(function () {
             $(".modal").css("display", "none");
         });
 
         // Handle cancellation form submission
-        $("#cancellationForm").submit(function(e) {
+        $("#cancellationForm").submit(function (e) {
             e.preventDefault();
 
             const reservationId = $("#cancellationReservationId").val();
@@ -82,20 +82,20 @@
                 url: "/api/reservations/" + reservationId,
                 type: "DELETE",
                 contentType: "application/json",
-                data: JSON.stringify({ cancelReason: cancelReason }),
-                success: function() {
+                data: JSON.stringify({cancelReason: cancelReason}),
+                success: function () {
                     $("#cancellationModal").css("display", "none");
                     $("#cancellationForm")[0].reset();
                     loadReservations();
                     showNotification("예약이 취소되었습니다.", "success");
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     showNotification("예약 취소 실패: " + xhr.responseJSON.message, "error");
                 }
             });
         });
 
-        $(window).click(function(e) {
+        $(window).click(function (e) {
             if ($(e.target).hasClass("modal")) {
                 $(".modal").css("display", "none");
             }
@@ -114,7 +114,7 @@
         $.ajax({
             url: "/api/reservations",
             type: "GET",
-            success: function(reservations) {
+            success: function (reservations) {
                 const tableBody = $("#reservationTableBody");
                 tableBody.empty();
 
@@ -123,7 +123,7 @@
                     return;
                 }
 
-                reservations.forEach(function(reservation) {
+                reservations.forEach(function (reservation) {
                     const startTime = new Date(reservation.reservationStartTime);
                     const endTime = new Date(reservation.reservationEndTime);
 
@@ -149,13 +149,13 @@
                     tableBody.append(row);
                 });
 
-                $(".cancel-reservation").click(function() {
+                $(".cancel-reservation").click(function () {
                     const reservationId = $(this).data("id");
                     $("#cancellationReservationId").val(reservationId);
                     $("#cancellationModal").css("display", "block");
                 });
             },
-            error: function(xhr) {
+            error: function (xhr) {
                 showNotification("예약 목록을 불러오는데 실패했습니다.", "error");
             }
         });
@@ -170,8 +170,8 @@
         const notification = $("<div>").addClass("notification").addClass(type).text(message);
         $("body").append(notification);
 
-        setTimeout(function() {
-            notification.fadeOut(function() {
+        setTimeout(function () {
+            notification.fadeOut(function () {
                 $(this).remove();
             });
         }, 3000);

@@ -3,7 +3,6 @@ package com.example.hospitalreservation.reservation.presentation.rest;
 import com.example.hospitalreservation.reservation.application.ReservationService;
 import com.example.hospitalreservation.reservation.application.command.CreateReservationCommand;
 import com.example.hospitalreservation.reservation.application.command.DeleteReservationCommand;
-import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
 import com.example.hospitalreservation.reservation.presentation.dto.request.CreateReservationRequest;
 import com.example.hospitalreservation.reservation.presentation.dto.request.DeleteReservationRequest;
 import com.example.hospitalreservation.reservation.presentation.dto.response.CreateReservationResponse;
