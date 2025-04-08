@@ -2,7 +2,7 @@ package com.example.hospitalreservation.reservation.application;
 
 import com.example.hospitalreservation.reservation.domain.entity.Reservation;
 import com.example.hospitalreservation.reservation.domain.repository.ReservationRepository;
-import com.example.hospitalreservation.reservation.domain.treatment.TreatmentPurpose;
+import com.example.hospitalreservation.common.treatment.TreatmentPurpose;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

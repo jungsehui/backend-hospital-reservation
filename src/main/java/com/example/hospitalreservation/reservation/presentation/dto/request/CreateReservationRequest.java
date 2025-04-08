@@ -1,7 +1,7 @@
 package com.example.hospitalreservation.reservation.presentation.dto.request;
 
 import com.example.hospitalreservation.reservation.application.command.CreateReservationCommand;
-import com.example.hospitalreservation.reservation.domain.treatment.TreatmentPurpose;
+import com.example.hospitalreservation.common.treatment.TreatmentPurpose;
 
 import java.time.LocalDateTime;
 
@@ -10,7 +10,7 @@ public record CreateReservationRequest(
         Long patientId,
         LocalDateTime reservationStartTime,
         LocalDateTime reservationEndTime,
-        TreatmentPurpose reason
+        String reason
 ) {
 
     public CreateReservationCommand toCommand() {

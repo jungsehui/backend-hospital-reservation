@@ -1,5 +1,6 @@
 package com.example.hospitalreservation.reservation.presentation.dto.response;
 
+import com.example.hospitalreservation.common.treatment.TreatmentPurpose;
 import com.example.hospitalreservation.reservation.domain.entity.Reservation;
 
 import java.time.LocalDateTime;
@@ -10,7 +11,7 @@ public record GetReservationResponse(
         Long patientId,
         LocalDateTime reservationStartTime,
         LocalDateTime reservationEndTime,
-        Integer fee
+        int fee
 ) {
 
     public static GetReservationResponse of(Reservation reservation) {
@@ -20,7 +21,7 @@ public record GetReservationResponse(
                 reservation.getPatientId(),
                 reservation.getStartTime(),
                 reservation.getEndTime(),
-                reservation.getTreatmentPurpose().getFee()
+                TreatmentPurpose.of(reservation.getReason()).getFee()
         );
     }
 }

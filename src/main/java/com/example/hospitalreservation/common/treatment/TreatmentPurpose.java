@@ -1,10 +1,8 @@
-package com.example.hospitalreservation.reservation.domain.treatment;
+package com.example.hospitalreservation.common.treatment;
 
 import com.example.hospitalreservation.common.exception.ApplicationException;
-import com.example.hospitalreservation.common.type.Type;
 import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 public enum TreatmentPurpose implements Type {
 

@@ -1,5 +1,6 @@
 package com.example.hospitalreservation.reservation.application;
 
+import com.example.hospitalreservation.common.treatment.TreatmentPurpose;
 import com.example.hospitalreservation.reservation.application.command.CreateReservationCommand;
 import com.example.hospitalreservation.reservation.application.command.DeleteReservationCommand;
 import com.example.hospitalreservation.reservation.domain.entity.Reservation;
@@ -28,7 +29,8 @@ public class ReservationService {
     public CreateReservationResponse createReservation(CreateReservationCommand createReservationCommand) {
         Reservation reservation = createReservationCommand.toReservation();
         Reservation registeredReservation = reservationRegister.register(reservation);
-        return CreateReservationResponse.of(registeredReservation);
+        int fee = TreatmentPurpose.of(createReservationCommand.reason()).getFee();
+        return CreateReservationResponse.of(registeredReservation, fee);
     }
 
     public List<GetReservationResponse> getAllReservations() {

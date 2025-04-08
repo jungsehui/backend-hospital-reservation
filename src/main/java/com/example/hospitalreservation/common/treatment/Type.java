@@ -1,4 +1,4 @@
-package com.example.hospitalreservation.common.type;
+package com.example.hospitalreservation.common.treatment;
 
 public interface Type {
 

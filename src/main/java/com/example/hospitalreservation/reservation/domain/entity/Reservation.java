@@ -1,7 +1,6 @@
 package com.example.hospitalreservation.reservation.domain.entity;
 
 import com.example.hospitalreservation.common.exception.ApplicationException;
-import com.example.hospitalreservation.reservation.domain.treatment.TreatmentPurpose;
 import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
 import lombok.Getter;
 
@@ -16,7 +15,7 @@ public class Reservation {
     private Long patientId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private TreatmentPurpose treatmentPurpose;
+    private String reason;
 
     public Reservation(
             Long id,
@@ -24,14 +23,14 @@ public class Reservation {
             Long patientId,
             LocalDateTime startTime,
             LocalDateTime endTime,
-            TreatmentPurpose treatmentPurpose
+            String reason
     ) {
         this.id = id;
         this.doctorId = doctorId;
         this.patientId = patientId;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.treatmentPurpose = treatmentPurpose;
+        this.reason = reason;
     }
 
     public void validateWithinBusinessHours(LocalDateTime time) {
@@ -48,7 +47,7 @@ public class Reservation {
     }
 
     public void validatePastTime(LocalDateTime startTime) {
-        if (!startTime.isBefore(LocalDateTime.now())) {
+        if (startTime.isBefore(LocalDateTime.now())) {
             throw new ApplicationException(ReservationExceptionCode.INVALID_RESERVATION_TIME_PAST);
         }
     }
@@ -60,6 +59,6 @@ public class Reservation {
     }
 
     public Reservation copy() {
-        return new Reservation(this.id, this.doctorId, this.patientId, this.startTime, this.endTime, this.treatmentPurpose);
+        return new Reservation(this.id, this.doctorId, this.patientId, this.startTime, this.endTime, this.reason);
     }
 }

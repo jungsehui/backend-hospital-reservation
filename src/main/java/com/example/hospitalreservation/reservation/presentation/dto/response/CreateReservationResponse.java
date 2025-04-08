@@ -9,11 +9,11 @@ public record CreateReservationResponse(
         int calculatedFee
 ) {
 
-    public static CreateReservationResponse of(Reservation reservation) {
+    public static CreateReservationResponse of(Reservation reservation, int calculatedFee) {
         return new CreateReservationResponse(
                 reservation.getId(),
                 Success.CREATE_RESERVATION.getMessage(),
-                reservation.getTreatmentPurpose().getFee()
+                calculatedFee
         );
     }
 }

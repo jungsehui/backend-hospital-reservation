@@ -4,6 +4,7 @@ import com.example.hospitalreservation.common.exception.ApplicationException;
 import com.example.hospitalreservation.reservation.domain.entity.Reservation;
 import com.example.hospitalreservation.reservation.domain.repository.ReservationRepository;
 import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 @Component
