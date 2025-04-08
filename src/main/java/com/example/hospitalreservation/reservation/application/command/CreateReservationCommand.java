@@ -15,6 +15,7 @@ public record CreateReservationCommand(
 
     public Reservation toReservation() {
         Reservation reservation = new Reservation(null, doctorId, patientId, startTime, endTime, treatmentPurpose);
+        reservation.validatePastTime(startTime);
         reservation.validateWithinBusinessHours(startTime);
         reservation.validateHourlySlot(startTime, endTime);
         return reservation;

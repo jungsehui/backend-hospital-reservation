@@ -47,6 +47,12 @@ public class Reservation {
         }
     }
 
+    public void validatePastTime(LocalDateTime startTime) {
+        if (!startTime.isBefore(LocalDateTime.now())) {
+            throw new ApplicationException(ReservationExceptionCode.INVALID_RESERVATION_TIME_PAST);
+        }
+    }
+
     public boolean isOverlapping(LocalDateTime existingTime, LocalDateTime newTime) {
         LocalDateTime startTime = existingTime;
         LocalDateTime endTime = startTime.plusHours(1);
