@@ -9,10 +9,8 @@ import java.util.List;
 public class DefaultFeeCalculator {
 
     public static int calculate(List<TreatmentPurpose> purposes) {
-        int total = 0;
-        for (TreatmentPurpose purpose : purposes) {
-            total += purpose.getFee();
-        }
-        return total;
+        return purposes.stream()
+                .mapToInt(TreatmentPurpose::getFee)
+                .sum();
     }
 }

@@ -3,7 +3,9 @@ package com.example.hospitalreservation.reservation.domain.entity;
 import com.example.hospitalreservation.common.exception.ApplicationException;
 import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import lombok.Getter;
 
+@Getter
 public enum TreatmentPurpose {
 
     GENERAL_CHECKUP("일반 검진", 10_000),
@@ -17,14 +19,6 @@ public enum TreatmentPurpose {
     TreatmentPurpose(String type, int fee) {
         this.type = type;
         this.fee = fee;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public int getFee() {
-        return fee;
     }
 
     @JsonCreator
