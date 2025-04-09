@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 @Getter
 public class Reservation {
@@ -15,6 +16,7 @@ public class Reservation {
     private Long patientId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private List<Reason> reasons;
     private String reason;
 
     public Reservation(
@@ -23,19 +25,19 @@ public class Reservation {
             Long patientId,
             LocalDateTime startTime,
             LocalDateTime endTime,
-            String reason
+            List<Reason> reasons
     ) {
         this.id = id;
         this.doctorId = doctorId;
         this.patientId = patientId;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.reason = reason;
+        this.reasons = reasons;
     }
 
     public void validateWithinBusinessHours(LocalDateTime time) {
         LocalTime localTime = time.toLocalTime();
-        if (localTime.isBefore(LocalTime.of(9, 0)) || localTime.isAfter(LocalTime.of(16, 00))) {
+        if (localTime.isBefore(LocalTime.of(9, 0)) || localTime.isAfter(LocalTime.of(16, 0))) {
             throw new ApplicationException(ReservationExceptionCode.OUT_OF_BUSINESS_HOURS);
         }
     }
@@ -59,6 +61,6 @@ public class Reservation {
     }
 
     public Reservation copy() {
-        return new Reservation(this.id, this.doctorId, this.patientId, this.startTime, this.endTime, this.reason);
+        return new Reservation(this.id, this.doctorId, this.patientId, this.startTime, this.endTime, this.reasons);
     }
 }

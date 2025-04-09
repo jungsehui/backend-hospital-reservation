@@ -1,8 +1,9 @@
 package com.example.hospitalreservation.reservation.application;
 
+import com.example.hospitalreservation.common.treatment.TreatmentPurpose;
+import com.example.hospitalreservation.reservation.domain.entity.Reason;
 import com.example.hospitalreservation.reservation.domain.entity.Reservation;
 import com.example.hospitalreservation.reservation.domain.repository.ReservationRepository;
-import com.example.hospitalreservation.common.treatment.TreatmentPurpose;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,6 @@ import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class ReservationServiceTest {
@@ -32,7 +32,8 @@ public class ReservationServiceTest {
     public void 깊은_복사_성공_테스트() throws Exception {
         // given
         LocalDateTime now = LocalDateTime.now().withMinute(0).withSecond(0).withNano(0);
-        Reservation reservation = new Reservation(null, 1L, 1L, now, now.plusHours(1), TreatmentPurpose.GENERAL_CHECKUP);
+        List<Reason> reasons = List.of(new Reason("일반 검진"), new Reason("감기 증상"));
+        Reservation reservation = new Reservation(null, 1L, 1L, now, now.plusHours(1), reasons);
         Reservation savedReservation = reservationRepository.save(reservation);
 
         // when

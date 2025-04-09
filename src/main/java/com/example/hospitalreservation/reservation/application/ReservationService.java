@@ -1,5 +1,6 @@
 package com.example.hospitalreservation.reservation.application;
 
+import com.example.hospitalreservation.common.treatment.DefaultFeeCalculator;
 import com.example.hospitalreservation.common.treatment.TreatmentPurpose;
 import com.example.hospitalreservation.reservation.application.command.CreateReservationCommand;
 import com.example.hospitalreservation.reservation.application.command.DeleteReservationCommand;
@@ -29,7 +30,11 @@ public class ReservationService {
     public CreateReservationResponse createReservation(CreateReservationCommand createReservationCommand) {
         Reservation reservation = createReservationCommand.toReservation();
         Reservation registeredReservation = reservationRegister.register(reservation);
-        int fee = TreatmentPurpose.of(createReservationCommand.reason()).getFee();
+        int fee = DefaultFeeCalculator.SUM.calculate(
+                createReservationCommand.reasons().stream()
+                        .map(reason -> TreatmentPurpose.of(reason.getReason()))
+                        .toArray(TreatmentPurpose[]::new)
+        );
         return CreateReservationResponse.of(registeredReservation, fee);
     }
 

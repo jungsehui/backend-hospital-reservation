@@ -1,6 +1,6 @@
 package com.example.hospitalreservation.common.treatment;
 
-public interface Type {
+public interface Purpose {
 
     String getType();
 

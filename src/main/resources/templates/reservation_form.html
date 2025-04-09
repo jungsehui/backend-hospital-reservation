@@ -42,13 +42,21 @@
                 <small>※ 예약 가능 시간: 09:00 ~ 17:00 (1시간 단위)</small>
 
                 <div class="form-group">
-                    <label for="reason">진료 목적:</label>
-                    <select id="reason" name="reason" required>
-                        <option value="">-- 선택하세요 --</option>
-                        <option value="일반 검진">일반 검진</option>
-                        <option value="감기 증상">감기 증상</option>
-                        <option value="피로 회복 주사">피로 회복 주사</option>
-                    </select>
+                    <label>진료 목적 <small>(복수 선택 가능)</small></label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-card">
+                            <input type="checkbox" name="reason" value="일반 검진">
+                            <span>🩺 일반 검진</span>
+                        </label>
+                        <label class="checkbox-card">
+                            <input type="checkbox" name="reason" value="감기 증상">
+                            <span>🤧 감기 증상</span>
+                        </label>
+                        <label class="checkbox-card">
+                            <input type="checkbox" name="reason" value="피로 회복 주사">
+                            <span>💉 피로 회복 주사</span>
+                        </label>
+                    </div>
                 </div>
 
                 <div class="form-actions">
@@ -82,12 +90,17 @@
                 return;
             }
 
+            const selectedReasons = [];
+            $("input[name='reason']:checked").each(function () {
+                selectedReasons.push($(this).val());
+            });
+
             const reservationData = {
                 doctorId: $("#doctorId").val(),
                 patientId: $("#patientId").val(),
                 reservationStartTime: startTimeStr,
                 reservationEndTime: endTimeStr,
-                reason: $("#reason").val()
+                requestedReasons: selectedReasons
             };
 
             $.ajax({

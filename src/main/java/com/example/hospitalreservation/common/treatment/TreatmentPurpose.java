@@ -4,7 +4,7 @@ import com.example.hospitalreservation.common.exception.ApplicationException;
 import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public enum TreatmentPurpose implements Type {
+public enum TreatmentPurpose implements Purpose {
 
     GENERAL_CHECKUP("일반 검진", 10_000),
     COLD_SYMPTOMS("감기 증상", 15_000),
