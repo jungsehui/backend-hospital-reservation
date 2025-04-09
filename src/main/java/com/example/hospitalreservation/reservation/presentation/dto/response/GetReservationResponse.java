@@ -17,13 +17,13 @@ public record GetReservationResponse(
         int fee
 ) {
 
-    public static GetReservationResponse of(Reservation reservation) {
+    public static GetReservationResponse from(Reservation reservation) {
         List<String> str = reservation.getReasons().stream()
                 .map(Reason::getReason)
                 .toList();
 
         TreatmentPurpose[] purposes = str.stream()
-                .map(TreatmentPurpose::of)
+                .map(TreatmentPurpose::from)
                 .toArray(TreatmentPurpose[]::new);
 
         int fee = DefaultFeeCalculator.SUM.calculate(purposes);

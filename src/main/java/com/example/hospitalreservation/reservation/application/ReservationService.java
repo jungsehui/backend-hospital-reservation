@@ -32,7 +32,7 @@ public class ReservationService {
         Reservation registeredReservation = reservationRegister.register(reservation);
         int fee = DefaultFeeCalculator.SUM.calculate(
                 createReservationCommand.reasons().stream()
-                        .map(reason -> TreatmentPurpose.of(reason.getReason()))
+                        .map(reason -> TreatmentPurpose.from(reason.getReason()))
                         .toArray(TreatmentPurpose[]::new)
         );
         return CreateReservationResponse.of(registeredReservation, fee);
@@ -41,7 +41,7 @@ public class ReservationService {
     public List<GetReservationResponse> getAllReservations() {
         List<Reservation> reservations = reservationRepository.findAll();
         return reservations.stream()
-                .map(GetReservationResponse::of)
+                .map(GetReservationResponse::from)
                 .toList();
     }
 

@@ -30,7 +30,7 @@ public enum TreatmentPurpose implements Purpose {
     }
 
     @JsonCreator
-    public static TreatmentPurpose of(String name) {
+    public static TreatmentPurpose from(String name) {
         for (TreatmentPurpose value : values()) {
             if (value.getType().equals(name)) {
                 return value;
