@@ -1,7 +1,6 @@
 package com.example.hospitalreservation.reservation.application;
 
-import com.example.hospitalreservation.common.treatment.DefaultFeeCalculator;
-import com.example.hospitalreservation.common.treatment.TreatmentPurpose;
+import com.example.hospitalreservation.reservation.domain.service.DefaultFeeCalculator;
 import com.example.hospitalreservation.reservation.application.command.CreateReservationCommand;
 import com.example.hospitalreservation.reservation.application.command.DeleteReservationCommand;
 import com.example.hospitalreservation.reservation.domain.entity.Reservation;
@@ -17,24 +16,24 @@ import java.util.List;
 @Service
 public class ReservationService {
 
-    private final ReservationCanceler reservationCanceler;
-    private final ReservationRegister reservationRegister;
     private final ReservationRepository reservationRepository;
+    private final ReservationRegister reservationRegister;
+    private final ReservationCanceler reservationCanceler;
 
-    public ReservationService(ReservationCanceler reservationCanceler, ReservationRegister reservationRegister, ReservationRepository reservationRepository) {
-        this.reservationCanceler = reservationCanceler;
-        this.reservationRegister = reservationRegister;
+    public ReservationService(
+            ReservationRepository reservationRepository,
+            ReservationRegister reservationRegister,
+            ReservationCanceler reservationCanceler
+    ) {
         this.reservationRepository = reservationRepository;
+        this.reservationRegister = reservationRegister;
+        this.reservationCanceler = reservationCanceler;
     }
 
     public CreateReservationResponse createReservation(CreateReservationCommand createReservationCommand) {
         Reservation reservation = createReservationCommand.toReservation();
         Reservation registeredReservation = reservationRegister.register(reservation);
-        int fee = DefaultFeeCalculator.SUM.calculate(
-                createReservationCommand.reasons().stream()
-                        .map(reason -> TreatmentPurpose.from(reason.getReason()))
-                        .toArray(TreatmentPurpose[]::new)
-        );
+        int fee = DefaultFeeCalculator.calculate(createReservationCommand.toPurposes());
         return CreateReservationResponse.of(registeredReservation, fee);
     }
 

@@ -1,6 +1,9 @@
 package com.example.hospitalreservation.common.message;
 
-public enum Success implements Message {
+import lombok.Getter;
+
+@Getter
+public enum Success {
 
     CREATE_RESERVATION("진료 예약 완료"),
     ;
@@ -9,10 +12,5 @@ public enum Success implements Message {
 
     Success(String message) {
         this.message = message;
-    }
-
-    @Override
-    public String getMessage() {
-        return message;
     }
 }

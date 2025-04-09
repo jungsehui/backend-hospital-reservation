@@ -1,6 +1,5 @@
 package com.example.hospitalreservation.reservation.application;
 
-import com.example.hospitalreservation.common.treatment.TreatmentPurpose;
 import com.example.hospitalreservation.reservation.domain.entity.Reason;
 import com.example.hospitalreservation.reservation.domain.entity.Reservation;
 import com.example.hospitalreservation.reservation.domain.repository.ReservationRepository;

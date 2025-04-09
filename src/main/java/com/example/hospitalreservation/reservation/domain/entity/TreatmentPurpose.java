@@ -1,10 +1,10 @@
-package com.example.hospitalreservation.common.treatment;
+package com.example.hospitalreservation.reservation.domain.entity;
 
 import com.example.hospitalreservation.common.exception.ApplicationException;
 import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public enum TreatmentPurpose implements Purpose {
+public enum TreatmentPurpose {
 
     GENERAL_CHECKUP("일반 검진", 10_000),
     COLD_SYMPTOMS("감기 증상", 15_000),
@@ -19,12 +19,10 @@ public enum TreatmentPurpose implements Purpose {
         this.fee = fee;
     }
 
-    @Override
     public String getType() {
         return type;
     }
 
-    @Override
     public int getFee() {
         return fee;
     }

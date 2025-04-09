@@ -1,5 +1,6 @@
 package com.example.hospitalreservation.reservation.application.command;
 
+import com.example.hospitalreservation.reservation.domain.entity.TreatmentPurpose;
 import com.example.hospitalreservation.reservation.domain.entity.Reason;
 import com.example.hospitalreservation.reservation.domain.entity.Reservation;
 
@@ -20,5 +21,11 @@ public record CreateReservationCommand(
         reservation.validateWithinBusinessHours(startTime);
         reservation.validateHourlySlot(startTime, endTime);
         return reservation;
+    }
+
+    public List<TreatmentPurpose> toPurposes() {
+        return reasons.stream()
+                .map(reason -> TreatmentPurpose.from(reason.getReason()))
+                .toList();
     }
 }

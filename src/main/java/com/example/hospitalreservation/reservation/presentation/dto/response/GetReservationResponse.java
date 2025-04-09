@@ -1,7 +1,7 @@
 package com.example.hospitalreservation.reservation.presentation.dto.response;
 
-import com.example.hospitalreservation.common.treatment.DefaultFeeCalculator;
-import com.example.hospitalreservation.common.treatment.TreatmentPurpose;
+import com.example.hospitalreservation.reservation.domain.service.DefaultFeeCalculator;
+import com.example.hospitalreservation.reservation.domain.entity.TreatmentPurpose;
 import com.example.hospitalreservation.reservation.domain.entity.Reason;
 import com.example.hospitalreservation.reservation.domain.entity.Reservation;
 
@@ -22,11 +22,11 @@ public record GetReservationResponse(
                 .map(Reason::getReason)
                 .toList();
 
-        TreatmentPurpose[] purposes = str.stream()
+        List<TreatmentPurpose> purposes = str.stream()
                 .map(TreatmentPurpose::from)
-                .toArray(TreatmentPurpose[]::new);
+                .toList();
 
-        int fee = DefaultFeeCalculator.SUM.calculate(purposes);
+        int fee = DefaultFeeCalculator.calculate(purposes);
 
         return new GetReservationResponse(
                 reservation.getId(),
