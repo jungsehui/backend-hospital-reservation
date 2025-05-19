@@ -1,18 +1,18 @@
-package com.example.hospitalreservation.patient.domain.exception;
+package com.example.hospitalreservation.doctor.exception;
 
 import com.example.hospitalreservation.common.exception.ExceptionCode;
 import org.springframework.http.HttpStatus;
 
-public enum PatientExceptionCode implements ExceptionCode {
+public enum DoctorExceptionCode implements ExceptionCode {
 
-    INVALID_POSITIVE_PATIENT_ID(HttpStatus.BAD_REQUEST, "P000", "환자 ID는 양수이어야 합니다."),
+    DOCTOR_NOT_FOUND(HttpStatus.NO_CONTENT, "D001", "존재하지 않는 의사입니다."),
     ;
 
     private final HttpStatus httpStatus;
     private final String code;
     private final String message;
 
-    PatientExceptionCode(HttpStatus httpStatus, String code, String message) {
+    DoctorExceptionCode(HttpStatus httpStatus, String code, String message) {
         this.httpStatus = httpStatus;
         this.code = code;
         this.message = message;

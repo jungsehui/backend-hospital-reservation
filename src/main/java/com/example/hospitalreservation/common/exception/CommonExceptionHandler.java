@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class CommonExceptionHandler {
 
-    @ExceptionHandler(value = ApplicationException.class)
+    @ExceptionHandler(ApplicationException.class)
     public ResponseEntity<ExceptionResponse> handleApplicationException(ApplicationException exception) {
         ExceptionCode code = exception.getCode();
         log.info("ApplicationException occurred !! code: {} message: {}", code.getCode(), code.getMessage());

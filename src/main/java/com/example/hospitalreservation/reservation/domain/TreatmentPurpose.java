@@ -1,4 +1,4 @@
-package com.example.hospitalreservation.reservation.domain.entity;
+package com.example.hospitalreservation.reservation.domain;
 
 import com.example.hospitalreservation.common.exception.ApplicationException;
 import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;

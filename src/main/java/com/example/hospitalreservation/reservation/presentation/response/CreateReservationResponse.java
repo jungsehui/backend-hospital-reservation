@@ -1,7 +1,6 @@
-package com.example.hospitalreservation.reservation.presentation.dto.response;
+package com.example.hospitalreservation.reservation.presentation.response;
 
-import com.example.hospitalreservation.common.message.Success;
-import com.example.hospitalreservation.reservation.domain.entity.Reservation;
+import com.example.hospitalreservation.reservation.domain.Reservation;
 
 public record CreateReservationResponse(
         Long reservationId,
@@ -12,7 +11,7 @@ public record CreateReservationResponse(
     public static CreateReservationResponse of(Reservation reservation, int calculatedFee) {
         return new CreateReservationResponse(
                 reservation.getId(),
-                Success.CREATE_RESERVATION.getMessage(),
+                "예약이 완료되었습니다.",
                 calculatedFee
         );
     }

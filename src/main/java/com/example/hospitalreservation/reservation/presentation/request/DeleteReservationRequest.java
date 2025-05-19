@@ -1,4 +1,4 @@
-package com.example.hospitalreservation.reservation.presentation.dto.request;
+package com.example.hospitalreservation.reservation.presentation.request;
 
 import com.example.hospitalreservation.reservation.application.command.DeleteReservationCommand;
 

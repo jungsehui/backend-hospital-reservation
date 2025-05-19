@@ -2,8 +2,8 @@ package com.example.hospitalreservation.reservation.domain.service;
 
 import com.example.hospitalreservation.common.exception.ApplicationException;
 import com.example.hospitalreservation.reservation.application.command.DeleteReservationCommand;
-import com.example.hospitalreservation.reservation.domain.entity.Reservation;
-import com.example.hospitalreservation.reservation.domain.repository.ReservationRepository;
+import com.example.hospitalreservation.reservation.domain.Reservation;
+import com.example.hospitalreservation.reservation.domain.ReservationRepository;
 import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ public class ReservationCanceler {
 
     public void cancel(DeleteReservationCommand deleteReservationCommand) {
         try {
-            Reservation toDelete = reservationRepository.findById(deleteReservationCommand.id());
+            Reservation toDelete = reservationRepository.getById(deleteReservationCommand.id());
             log.info("예약 ID {} 취소됨. 사유: {}", deleteReservationCommand.id(), deleteReservationCommand.cancelReason());
             reservationRepository.deleteById(toDelete.getId());
         } catch (ApplicationException e) {

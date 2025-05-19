@@ -1,31 +1,18 @@
 package com.example.hospitalreservation.reservation.application.command;
 
-import com.example.hospitalreservation.reservation.domain.entity.TreatmentPurpose;
-import com.example.hospitalreservation.reservation.domain.entity.Reason;
-import com.example.hospitalreservation.reservation.domain.entity.Reservation;
+import com.example.hospitalreservation.reservation.domain.TreatmentPurpose;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public record CreateReservationCommand(
         Long doctorId,
         Long patientId,
         LocalDateTime startTime,
         LocalDateTime endTime,
-        List<Reason> reasons
+        String reason
 ) {
 
-    public Reservation toReservation() {
-        Reservation reservation = new Reservation(null, doctorId, patientId, startTime, endTime, reasons);
-        reservation.validatePastTime(startTime);
-        reservation.validateWithinBusinessHours(startTime);
-        reservation.validateHourlySlot(startTime, endTime);
-        return reservation;
-    }
-
-    public List<TreatmentPurpose> toPurposes() {
-        return reasons.stream()
-                .map(reason -> TreatmentPurpose.from(reason.getReason()))
-                .toList();
+    public TreatmentPurpose toPurpose() {
+        return TreatmentPurpose.from(reason);
     }
 }
