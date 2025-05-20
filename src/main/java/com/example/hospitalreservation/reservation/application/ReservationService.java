@@ -44,7 +44,8 @@ public class ReservationService {
                 .toList();
     }
 
-    public void cancelReservation(DeleteReservationCommand deleteReservationCommand) {
-        reservationCanceler.cancel(deleteReservationCommand);
+    public void cancelReservation(DeleteReservationCommand command) {
+        Reservation reservation = reservationRepository.getById(command.id());
+        reservationCanceler.cancel(reservation);
     }
 }

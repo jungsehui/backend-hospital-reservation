@@ -5,26 +5,23 @@ import com.example.hospitalreservation.reservation.application.command.DeleteRes
 import com.example.hospitalreservation.reservation.domain.Reservation;
 import com.example.hospitalreservation.reservation.domain.ReservationRepository;
 import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Slf4j
+@RequiredArgsConstructor
 @Component
 public class ReservationCanceler {
 
     private final ReservationRepository reservationRepository;
 
-    public ReservationCanceler(ReservationRepository reservationRepository) {
-        this.reservationRepository = reservationRepository;
-    }
-
-    public void cancel(DeleteReservationCommand deleteReservationCommand) {
+    public void cancel(Reservation reservation) {
         try {
-            Reservation toDelete = reservationRepository.getById(deleteReservationCommand.id());
-            log.info("예약 ID {} 취소됨. 사유: {}", deleteReservationCommand.id(), deleteReservationCommand.cancelReason());
-            reservationRepository.deleteById(toDelete.getId());
+            reservationRepository.delete(reservation);
+            log.info("예약 ID {} 취소됨. 사유: {}", reservation.getId(), reservation.getReason());
         } catch (ApplicationException e) {
-            log.warn("예약 취소 실패 - ID {}: {}", deleteReservationCommand.id(), ReservationExceptionCode.RESERVATION_NOT_FOUND.getMessage());
+            log.warn("예약 취소 실패 - ID {}: {}", reservation.getId(), ReservationExceptionCode.RESERVATION_NOT_FOUND.getMessage());
         }
     }
 }
