@@ -47,12 +47,8 @@ public class ReservationService {
     }
 
     public void cancelReservation(DeleteReservationCommand command) {
-        try {
-            Reservation reservation = reservationRepository.getById(command.id());
-            reservationRepository.delete(reservation);
-            log.info("예약 ID {} 취소됨. 사유: {}", reservation.getId(), reservation.getReason());
-        } catch (ApplicationException e) {
-            log.warn("예약 취소 실패 - ID {}: {}", command.id(), ReservationExceptionCode.RESERVATION_NOT_FOUND.getMessage());
-        }
+        Reservation reservation = reservationRepository.getById(command.id());
+        reservationRepository.delete(reservation);
+        log.info("예약 ID {} 취소됨. 사유: {}", reservation.getId(), reservation.getReason());
     }
 }
