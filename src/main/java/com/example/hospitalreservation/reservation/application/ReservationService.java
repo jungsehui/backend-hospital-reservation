@@ -1,6 +1,5 @@
 package com.example.hospitalreservation.reservation.application;
 
-import com.example.hospitalreservation.common.exception.ApplicationException;
 import com.example.hospitalreservation.doctor.domain.Doctor;
 import com.example.hospitalreservation.doctor.domain.DoctorRepository;
 import com.example.hospitalreservation.patient.domain.Patient;
@@ -11,7 +10,6 @@ import com.example.hospitalreservation.reservation.domain.Reservation;
 import com.example.hospitalreservation.reservation.domain.ReservationRepository;
 import com.example.hospitalreservation.reservation.domain.service.DefaultFeeCalculator;
 import com.example.hospitalreservation.reservation.domain.service.ReservationRegister;
-import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
 import com.example.hospitalreservation.reservation.presentation.response.CreateReservationResponse;
 import com.example.hospitalreservation.reservation.presentation.response.GetReservationResponse;
 import lombok.RequiredArgsConstructor;
@@ -40,8 +38,7 @@ public class ReservationService {
     }
 
     public List<GetReservationResponse> getAllReservations() {
-        List<Reservation> reservations = reservationRepository.findAll();
-        return reservations.stream()
+        return reservationRepository.findAll().stream()
                 .map(GetReservationResponse::from)
                 .toList();
     }
