@@ -1,5 +1,6 @@
 package com.example.hospitalreservation.reservation.application;
 
+import com.example.hospitalreservation.common.exception.ApplicationException;
 import com.example.hospitalreservation.doctor.domain.Doctor;
 import com.example.hospitalreservation.doctor.domain.DoctorRepository;
 import com.example.hospitalreservation.patient.domain.Patient;
@@ -9,21 +10,22 @@ import com.example.hospitalreservation.reservation.application.command.DeleteRes
 import com.example.hospitalreservation.reservation.domain.Reservation;
 import com.example.hospitalreservation.reservation.domain.ReservationRepository;
 import com.example.hospitalreservation.reservation.domain.service.DefaultFeeCalculator;
-import com.example.hospitalreservation.reservation.domain.service.ReservationCanceler;
 import com.example.hospitalreservation.reservation.domain.service.ReservationRegister;
+import com.example.hospitalreservation.reservation.exception.ReservationExceptionCode;
 import com.example.hospitalreservation.reservation.presentation.response.CreateReservationResponse;
 import com.example.hospitalreservation.reservation.presentation.response.GetReservationResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ReservationService {
 
     private final ReservationRegister reservationRegister;
-    private final ReservationCanceler reservationCanceler;
     private final ReservationRepository reservationRepository;
     private final DoctorRepository doctorRepository;
     private final PatientRepository patientRepository;
@@ -45,7 +47,12 @@ public class ReservationService {
     }
 
     public void cancelReservation(DeleteReservationCommand command) {
-        Reservation reservation = reservationRepository.getById(command.id());
-        reservationCanceler.cancel(reservation);
+        try {
+            Reservation reservation = reservationRepository.getById(command.id());
+            reservationRepository.delete(reservation);
+            log.info("예약 ID {} 취소됨. 사유: {}", reservation.getId(), reservation.getReason());
+        } catch (ApplicationException e) {
+            log.warn("예약 취소 실패 - ID {}: {}", command.id(), ReservationExceptionCode.RESERVATION_NOT_FOUND.getMessage());
+        }
     }
 }
