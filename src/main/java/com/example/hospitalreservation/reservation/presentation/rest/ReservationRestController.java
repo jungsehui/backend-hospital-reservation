@@ -26,8 +26,8 @@ public class ReservationRestController {
     private final ReservationService reservationService;
 
     @PostMapping
-    public ResponseEntity<CreateReservationResponse> createReservation(@RequestBody CreateReservationRequest createReservationRequest) {
-        CreateReservationCommand command = createReservationRequest.toCommand();
+    public ResponseEntity<CreateReservationResponse> createReservation(@RequestBody CreateReservationRequest request) {
+        CreateReservationCommand command = request.toCommand();
         Reservation reservation = reservationService.createReservation(command);
         int fee = DefaultFeeCalculator.calculate(command.toPurpose());
         return ResponseEntity.ok(CreateReservationResponse.of(reservation, fee));
@@ -42,8 +42,8 @@ public class ReservationRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> cancelReservation(@PathVariable Long id, @RequestBody DeleteReservationRequest deleteReservationRequest) {
-        DeleteReservationCommand command = DeleteReservationRequest.toCommand(id, deleteReservationRequest);
+    public ResponseEntity<Void> cancelReservation(@PathVariable Long id, @RequestBody DeleteReservationRequest request) {
+        DeleteReservationCommand command = DeleteReservationRequest.toCommand(id, request);
         reservationService.cancelReservation(command);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
