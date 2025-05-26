@@ -28,19 +28,15 @@ public class ReservationService {
     private final DoctorRepository doctorRepository;
     private final PatientRepository patientRepository;
 
-    public CreateReservationResponse createReservation(CreateReservationCommand command) {
+    public Reservation createReservation(CreateReservationCommand command) {
         Doctor doctor = doctorRepository.getById(command.doctorId());
         Patient patient = patientRepository.getById(command.patientId());
         Reservation reservation = new Reservation(doctor, patient, command.startTime(), command.endTime(), command.reason());
-        Reservation registeredReservation = reservationRegister.register(reservation);
-        int fee = DefaultFeeCalculator.calculate(command.toPurpose());
-        return CreateReservationResponse.of(registeredReservation, fee);
+        return reservationRegister.register(reservation);
     }
 
-    public List<GetReservationResponse> getAllReservations() {
-        return reservationRepository.findAll().stream()
-                .map(GetReservationResponse::from)
-                .toList();
+    public List<Reservation> getAllReservations() {
+        return reservationRepository.findAll();
     }
 
     public void cancelReservation(DeleteReservationCommand command) {

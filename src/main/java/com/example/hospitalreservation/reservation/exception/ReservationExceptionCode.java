@@ -1,8 +1,10 @@
 package com.example.hospitalreservation.reservation.exception;
 
 import com.example.hospitalreservation.common.exception.ExceptionCode;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Getter
 public enum ReservationExceptionCode implements ExceptionCode {
 
     OUT_OF_BUSINESS_HOURS(HttpStatus.BAD_REQUEST, "R000", "예약 가능한 시간은 09:00 ~ 17:00 입니다."),
@@ -21,20 +23,5 @@ public enum ReservationExceptionCode implements ExceptionCode {
         this.httpStatus = httpStatus;
         this.code = code;
         this.message = message;
-    }
-
-    @Override
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
-    }
-
-    @Override
-    public String getCode() {
-        return code;
-    }
-
-    @Override
-    public String getMessage() {
-        return message;
     }
 }

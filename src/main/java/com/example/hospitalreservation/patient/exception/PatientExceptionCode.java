@@ -1,8 +1,10 @@
 package com.example.hospitalreservation.patient.exception;
 
 import com.example.hospitalreservation.common.exception.ExceptionCode;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Getter
 public enum PatientExceptionCode implements ExceptionCode {
 
     PATIENT_NOT_FOUND(HttpStatus.NO_CONTENT, "R003", "존재하지 않는 환자입니다."),
@@ -16,20 +18,5 @@ public enum PatientExceptionCode implements ExceptionCode {
         this.httpStatus = httpStatus;
         this.code = code;
         this.message = message;
-    }
-
-    @Override
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
-    }
-
-    @Override
-    public String getCode() {
-        return code;
-    }
-
-    @Override
-    public String getMessage() {
-        return message;
     }
 }
