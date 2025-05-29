@@ -28,11 +28,12 @@ public class ReservationService {
     private final DoctorRepository doctorRepository;
     private final PatientRepository patientRepository;
 
-    public Reservation createReservation(CreateReservationCommand command) {
+    public Long createReservation(CreateReservationCommand command) {
         Doctor doctor = doctorRepository.getById(command.doctorId());
         Patient patient = patientRepository.getById(command.patientId());
         Reservation reservation = new Reservation(doctor, patient, command.startTime(), command.endTime(), command.reason());
-        return reservationRegister.register(reservation);
+        Reservation registered = reservationRegister.register(reservation);
+        return registered.getId();
     }
 
     public List<Reservation> getAllReservations() {

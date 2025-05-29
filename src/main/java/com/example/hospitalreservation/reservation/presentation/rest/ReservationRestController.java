@@ -28,9 +28,9 @@ public class ReservationRestController {
     @PostMapping
     public ResponseEntity<CreateReservationResponse> createReservation(@RequestBody CreateReservationRequest request) {
         CreateReservationCommand command = request.toCommand();
-        Reservation reservation = reservationService.createReservation(command);
+        Long id = reservationService.createReservation(command);
         int fee = DefaultFeeCalculator.calculate(command.toPurpose());
-        return ResponseEntity.ok(CreateReservationResponse.of(reservation, fee));
+        return ResponseEntity.ok(CreateReservationResponse.of(id, fee));
     }
 
     @GetMapping
